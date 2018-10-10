@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    
+    <link rel="stylesheet" type="text/css" href="css/signinup.css">   
+    <title>Sign Up</title>
+</head>
+    
+    <body>
+    <div class="login-box">
+    <img src="avatar.png" class="avatar">
+
+        <h1>Welcome!!</h1>
+            {{#if error}}
+            <p> {{error}} </p>
+            {{/if}}
+            <form method="Post">
+            <p> Name</p>
+            <input type="text" required name="name" placeholder="Enter Full Name">
+            <p>Username</p>
+			<input type="text" required name="username" placeholder="Enter Username">
+			<p>Email</p>
+            <input type="email" required name="email" placeholder="Enter Email ID">
+			<p>BirthDate</p>
+			<input type="date" name="dob">
+			<p>Password</p>
+            <input type="password" required min="5" name="password" placeholder="Enter Password">
+            <input id="#signup"type="submit" name="submitted" value="Login">
+            </form>
+    </div>
+	   <script src="./javascript/frontsignup.js"></script>
+    </body>
+</html>

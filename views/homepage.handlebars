@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <title>
+        Test
+        </title>
+        <link rel="stylesheet" type="text/css" href="/../css/homepagestyle.css"> 
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    </head>
+    
+    <body>
+            <div class="logo">SocialMedia</div>
+            <div class="utilities">
+                <div class="utility"> 
+                    <img alt="icon" src="../icons/add-a-contact-on-phone-interface-symbol-of-a-user-with-a-plus-sign.png">
+                </div>
+                <div class="utility"> 
+                    <img alt="icon" src="../icons/close-envelope.png">
+                </div>
+                <div class="utility"> 
+                    <img alt="icon" src="../icons/turn-notifications-on-button.png">
+                </div>
+            </div>
+            <div class="profile">
+                <div class="Overlay"></div>
+                    <div class="img">
+
+                        <img alt="pic" src="../images/Zayn-malik.jpg" > 
+                    </div>
+                 {{#each result.[1]}}
+                    <div class="profileName">
+                      <p>  {{username}}</p>
+                    </div>
+
+                    <div>
+                        <p>
+                            Followers : {{userid}}
+                            {{/each}}
+                                    <a href="#" class=" button editbutton">View Profile</a>
+                                    <a href="#" class=" button editbutton">Sign Out</a>
+                        </p>
+                    </div>
+                    
+            </div>
+        
+            <div class="chats">
+                    <div class="Overlay"></div>
+                    <div class="chatsUser">
+                        <div class="chatsUserPic"><img alt="pic" src="../images/Zayn-malik.jpg"></div>
+                        <p>hi im here</p>
+                        <div class="chatsUserName">{{caption}}</div>
+                    </div>
+                    <div class="chatsUser">
+                        <div class="chatsUserPic"><img alt="pic" src="../images/Zayn-malik.jpg"></div>
+                        <div class="chatsUserName">Karan</div>
+                    </div>
+                    <div class="chatsUser">
+                        <div class="chatsUserPic"><img alt="pic" src="../images/Zayn-malik.jpg"></div>
+                        <div class="chatsUserName">Karan</div>
+                    </div>
+                    <div class="chatsUser">
+                        <div class="chatsUserPic"><img alt="pic" src="../images/Zayn-malik.jpg"></div>
+                        <div class="chatsUserName">Karan</div>
+                    </div>
+            </div>
+        
+            <div class ="info">
+                    <div class="section" id="tab">
+                        <a href="#section"  class=" button link ">NewsFeeds</a>
+                        <a href="#about"  class=" button link">Discover</a>
+                        <a href="#friends" class=" button link">Suggestions</a>
+                    </div>
+
+                    <div class="posts">
+                                         {{#each result.[0]}}
+
+                        <div class="post">
+                            <div class="postimage"><img alt2="pics" src="../images/Zayn-malik%202.jpg"></div>
+                            <button onclick="myFunction({{pid}})">Like this post</button>
+
+                            <div class="postcaption"> {{caption}} <br>1k likes  <br> 200 comments</div>
+                        </div>
+                                            {{/each}}
+<script>
+function myFunction(id) {
+console.log(id);
+}
+</script>
+                    </div>
+
+                    <div id="friends">
+                            <div class="friend">
+                                    <div class="friendImage">
+                                        <img alt="pics" src="../images/download.jpg">
+                                    </div>
+                                    <div class="friendName">
+                                        Devbrat Dash
+                                        <a href="#" class=" button ">Follow</a>  
+                                    </div>
+                            </div>
+                            <div class="friend">
+                                    <div class="friendImage">
+                                        <img alt="pics" src="../images/download.jpg">
+                                    </div>
+                                    <div class="friendName">
+                                        Devbrat Dash
+                                        <a href="#" class=" button ">Add Friend</a>  
+                                    </div>
+                            </div>
+                            <div class="friend">
+                                    <div class="friendImage">
+                                        <img alt="pics" src="../images/download.jpg">
+                                    </div>
+                                    <div class="friendName">
+                                        Devbrat Dash
+                                        <a href="#" class=" button ">Add Friend</a>  
+                                    </div>
+                            </div>
+                            <div class="friend">
+                                    <div class="friendImage">
+                                        <img alt="pics" src="../images/download.jpg">
+                                    </div>
+                                    <div class="friendName">
+                                        Devbrat Dash
+                                        <a href="#" class=" button ">Add Friend</a>  
+                                    </div>
+                            </div>
+                            <div class="friend">
+                                    <div class="friendImage">
+                                        <img alt="pics" src="../images/download.jpg">
+                                    </div>
+                                    <div class="friendName">
+                                        Devbrat Dash
+                                        <a href="#" class=" button ">Add Friend</a>  
+                                    </div>
+                            </div>
+                            <div class="friend">
+                                    <div class="friendImage">
+                                        <img alt="pics" src="../images/download.jpg">
+                                    </div>
+                                    <div class="friendName">
+                                        Devbrat Dash
+                                        <a href="#" class=" button ">Add Friend</a>  
+                                    </div>
+                            </div>
+                    </div>
+            </div>
+        <script src="../javascript/homepage.js">
+        </script> 
+    </body>
+</html>

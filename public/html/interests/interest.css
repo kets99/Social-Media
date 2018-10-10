@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    letter-spacing: 1.2;
+    font-family: cursive;    
+    color: white;
+}
+
+body{
+/*    background-image: url(../../images/cover.jpg)*/
+    background-color: white;
+}
+
+.box{
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
+    box-shadow: 8px 6px 5px black;
+    border: 2px solid ;
+    background-color: rgba(210,210,210,0.5);
+    padding: 1% 1%;
+}
+
+.title{
+    padding: 3% 5%;
+    font-family: 'Raleway', sans-serif;
+    font-size: 2em;
+    background-color: rgba(0,00,0,0.4);
+}
+
+.options{
+    margin: 2.5% auto;
+}
+
+.button{
+    padding: 1% 2%;
+    margin: 1%;
+    background: blueviolet;
+    border: none;
+    border-radius: 10%;
+    font-size: 0.9em;
+    box-shadow: 4px 3px 8px black; 
+}
+
+.button:hover{
+    background: violet;
+    box-shadow: none;
+}
+

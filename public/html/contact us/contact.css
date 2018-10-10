@@ -1,0 +1,50 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+body{
+    background-image: url(../../images/cover.jpg);
+}
+
+.box{
+    background-color: aliceblue;
+    margin: 5% auto;
+    width: 50%;
+    height: 80%;
+    padding-top: 1%;
+    display: flex;
+    flex-direction: column; 
+    box-shadow: 3px 5px 8px black;
+    overflow: hidden;
+}
+
+input,p,textarea{
+    width: 90%;
+    margin: 2% 5%;
+    height: 5%;
+    font-size: 1.2em;
+}
+
+textarea{
+    height: 15%;
+}
+
+input[type="submit"]{
+    width: 30%;
+    margin: 2% 35%;
+    background-color: blueviolet;
+    border: none;
+    height: 8%;
+    box-shadow: 3px 5px 8px black;
+    padding: 1.2%;
+    font-size: 1.2em;
+    color: aliceblue;
+    font-family: cursive;
+    border-radius: 5%;
+}
+
+input[type="submit"]:hover{
+    box-shadow: none;
+}
