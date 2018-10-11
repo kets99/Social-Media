@@ -90,9 +90,6 @@ var insertUser=(body,callback)=>{
     }
 
 
-
-
-
  var followPeople=(user1)=>{
         console.log(user1);
         console.log("hereee");
@@ -107,11 +104,23 @@ var insertUser=(body,callback)=>{
     }
     
 
+ var addPosts=(id,callback)=>{
+        //the method for adding post details ... into the dtabase
+        connection.query("insert into ",(err,result,fields)=>{
+                if(result) 
+                    callback(null,result);
+                else
+                    callback(err,null);
+            }             
+        );
+    }
+
 module.exports={
     insertUser,
     checkUser,
     getHome,
     getPeople,
-    followPeople
+    followPeople,
+    addPosts,
 }
 

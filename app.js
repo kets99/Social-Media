@@ -4,6 +4,7 @@ var app = express();
 var exphbs = require('express-handlebars');
 var handler = require('./routes/handler');
 const multer = require('multer');
+const mime = require('mime');
 
 
 
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', handler);
+app.use('/',handler);
 
 app.listen(3000,()=>{
     console.log('listening');
