@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>
-        Test
+        Explore
         </title>
         <link rel="stylesheet" type="text/css" href="/../css/homepagestyle.css"> 
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -44,37 +44,27 @@
         
             
             <div class ="info">
-                    <div class="section" id="tab">
-                        <a href="#section"  class=" button link ">NewsFeeds</a>
-            <a href="/explore/:"{userid}>explore</a>
+                                {{#each result.[0]}}
 
-
-                        
-                    </div>
-
-                    <div class="posts">
-                                         {{#each result.[0]}}
-
-                        <div class="post">
-                            <div class="postimage"><img alt2="pics" src="../images/Zayn-malik%202.jpg"></div>
+                        <div class="person">
+                            <div class="friendimage"><img alt2="pics" src="../images/Zayn-malik%202.jpg"></div>
                             
-                            <button type ="button" onclick="myFunction({{pid}})">Comment this post</button>
 
+                                    <div class="friendName" name="friendName">
+                                        {{username}}
+                                    </div>
 
-                            <div class="postcaption"> {{caption}} <br>1k likes  <br> 200 comments</div>
+        <button type ="button" onclick="followPeople({{userid}})" >Follow</button>
+
                         </div>
-                                            {{/each}}
-                                    
-<script>
-function myFunction(id) {
-console.log(id);
-}
-</script>
+                                            {{/each}}          
+
 
                     </div>
 
             </div>
-        <script src="../javascript/homepage.js">
-        </script> 
+        
+        <script type="text/javascript" src="../model/queries.js">
+</script>
     </body>
 </html>

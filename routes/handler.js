@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var queries = require(path.join(__dirname,'../model/queries'));
-
+var userid1 ;
 
 router.get('/',(req,res)=>{
    res.render('landing');
@@ -47,6 +47,7 @@ router.get('/homepage/:userid',(req,res)=>{
             throw err;
         else
         {
+            userid1=req.params.userid;
             console.log(result);
             res.render('homepage',{
                     result
@@ -55,19 +56,42 @@ router.get('/homepage/:userid',(req,res)=>{
 });
 });
 
-// router.get('/homepage/:userid',(req,res)=>{
-//    queries.userresults(req.params.userid,(err,result)=>{
-//         if(err) console.log(err)
-//             else res.render('homepage',{result});
-//    })
-// });
 
-router.get('/profile',(req,res)=>{
-   res.render('profile');
+
+router.get('/explore/:'+userid1,(req,res)=>{
+queries.getPeople(userid1,(err,result)=>{
+        if(err) 
+            console.log(err);
+        else {
+            res.render('explore',{result});
+
+        }
+    });
+    
 });
 
 
 
+router.post('/follow/:id',(req,res)=>{
+    var follower = id;
+    var following = req.body.userid;
+    queries.followPeople(following,(err,userid),follower=>{
+        if(err) 
+            console.log(err);
+        else 
+            res.redirect('/homepage/'+userid);
+    });
+});
+
+
+
+
+
+
+
+router.get('/profile',(req,res)=>{
+   res.render('profile');
+});
 
 
 
