@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var queries = require(path.join(__dirname,'../model/queries'));
-var userid1 ;
+var sess;
 const mime = require('mime');
 
 router.get('/',(req,res)=>{
@@ -11,16 +11,19 @@ router.get('/',(req,res)=>{
 
 
 router.get('/signin',(req,res)=>{
-   res.render('signin'); 
+     res.render('signin'); 
 });
 
 router.post('/signin',(req,res)=>{
-    queries.checkUser(req.body,(err,user)=>{
+     console.log(req.user);
+    console.log(req.isAuthenticated());
+
+    queries.checkUser(req,(err,user)=>{
         if(err) 
             res.render('signin',{
             error: err});
         else {
-            res.redirect('/homepage/'+user.userid);
+            res.redirect('/homepage');
         }
     });
 });
@@ -37,18 +40,19 @@ router.post('/signup',(req,res)=>{
             res.render('signup',{
             error: err});
         else 
-            res.redirect('/homepage/'+userid);
+            res.redirect('/homepage');
     });
 });
 
 
-router.get('/homepage/:userid',(req,res)=>{
-    queries.getHome(req.params.userid,(err,result)=>{
+router.get('/homepage',authenticationMiddleware(),(req,res)=>{
+    
+    queries.getHome(req.session.passport.user,(err,result)=>{
         if(err)
             throw err;
         else
         {
-            userid1=req.params.userid;
+            
             console.log(result);
             res.render('homepage',{
                     result
@@ -59,7 +63,7 @@ router.get('/homepage/:userid',(req,res)=>{
 
 
 
-router.get('/explore/:'+userid1,(req,res)=>{
+router.get('/explore',(req,res)=>{
 queries.getPeople(userid1,(err,result)=>{
         if(err) 
             console.log(err);
@@ -73,7 +77,7 @@ queries.getPeople(userid1,(err,result)=>{
 
 
 
-router.post('/follow/:id',(req,res)=>{
+router.post('/follow',(req,res)=>{
     var follower = id;
     var following = req.body.userid;
     queries.followPeople(following,(err,userid),follower=>{
@@ -175,6 +179,18 @@ router.post('/post/add',(req,res)=>{
     
 }
 );
+
+
+
+function authenticationMiddleware () {  
+    return (req, res, next) => {
+        console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
+
+        if (req.isAuthenticated()) return next();
+        res.redirect('/login')
+    }
+}
+
 
 
 module.exports=router;
