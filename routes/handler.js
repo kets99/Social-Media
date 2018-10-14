@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var queries = require(path.join(__dirname,'../model/queries'));
-var sess;
+
 const mime = require('mime');
 
 router.get('/',(req,res)=>{
@@ -15,19 +15,30 @@ router.get('/signin',(req,res)=>{
 });
 
 router.post('/signin',(req,res)=>{
-     console.log(req.user);
-    console.log(req.isAuthenticated());
+
+
 
     queries.checkUser(req,(err,user)=>{
         if(err) 
             res.render('signin',{
             error: err});
         else {
+
+
+     console.log(req.user);
+    console.log(req.isAuthenticated());
             res.redirect('/homepage');
         }
     });
 });
 
+router.get('/logout', (req, res, next) => {
+    req.logout()
+    req.session.destroy(() => {
+        res.clearCookie('connect.sid')
+        res.redirect('/signin')
+    })
+})﻿
 
 router.get('/signup',(req,res)=>{
    res.render('signup');
@@ -73,6 +84,24 @@ queries.getPeople(userid1,(err,result)=>{
         }
     });
     
+});
+
+
+
+
+router.get('/profile',authenticationMiddleware(),(req,res)=>{
+    
+    queries.getProfile(req.session.passport.user,(err,result)=>{
+        if(err)
+            throw err;
+        else
+        {
+            console.log(result);
+            res.render('profile',{
+                    result
+            });
+    }
+});
 });
 
 
@@ -155,11 +184,6 @@ queries.addPosts(following,(err,userid),follower=>{
 });
 
 
-
-
-
-
-
 router.get('/profile',(req,res)=>{
    res.render('profile');
 });
@@ -187,7 +211,7 @@ function authenticationMiddleware () {
         console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
 
         if (req.isAuthenticated()) return next();
-        res.redirect('/login')
+        res.redirect('/');
     }
 }
 

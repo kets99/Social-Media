@@ -4,7 +4,6 @@ var passport1 = require('./../app');
 var LocalStrategy   = require('passport-local').Strategy;
 var passport = require('passport');
 
-var passportlocal = require('passport-local');
 
 const connection = mysql2.createConnection({
     host:'127.0.0.1',
@@ -91,8 +90,23 @@ var insertUser=(body,callback)=>{
 
 // Getting user info and feed ---------------------------------
     var getHome=(id,callback)=>{
-        console.log("HNH");
+    
         connection.query("SELECT * FROM post,foll_info WHERE follower_id="+id+" AND person1_id=uid1 order by time desc limit 10 ;SELECT * from userinfo WHERE userid="+id ,[0,1],(err,result,fields)=>{
+                if(result) 
+                    callback(null,result);
+                else
+                    callback(err,null);
+            }             
+        );
+    }
+
+
+
+
+//getting users profile 
+ var getProfile=(id,callback)=>{
+        
+        connection.query("SELECT * FROM post WHERE uid1="+id+" order by time desc limit 10 ;SELECT * from userinfo WHERE userid="+id ,[0,1],(err,result,fields)=>{
                 if(result) 
                     callback(null,result);
                 else
@@ -128,6 +142,36 @@ var insertUser=(body,callback)=>{
     }
     
 
+
+ var likeAdd=(pid)=>{
+    
+        console.log("hereee");
+        var userid1 = req.session.passport.user;
+        connection.query("insert into like_info(likerid,postid) values ("+userid1+","+pid+")",(err,result,fields)=>{
+                if(result) 
+                    console.log("Followed");
+                else
+                    console.log("ERROR");
+            }             
+        );
+    }
+
+
+ var commentAdd=(user2)=>{
+    
+        console.log("hereee");
+        var follower = userid1;
+        connection.query("insert into foll_info(follower_id,person1_id) values ("+follower+","+user1+")",(err,result,fields)=>{
+                if(result) 
+                    console.log("Followed");
+                else
+                    console.log("ERROR");
+            }             
+        );
+    }
+
+
+
  var addPosts=(id,callback)=>{
         //the method for adding post details ... into the dtabase
         connection.query("insert into ",(err,result,fields)=>{
@@ -146,5 +190,8 @@ module.exports={
     getPeople,
     followPeople,
     addPosts,
+    getProfile,
+    likeAdd,
+    commentAdd,
 }
 

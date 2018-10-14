@@ -22,11 +22,12 @@
             </div>
             <div class="profile">
                 <div class="Overlay"></div>
+                                 {{#each result.[1]}}
+
                     <div class="img">
 
-                        <img alt="pic" src="../images/cover.jpg" > 
+                        <img alt="pic" src="{{userdp}}" > 
                     </div>
-                 {{#each result.[1]}}
                     <div class="profileName">
                       <p>  {{username}}</p>
                     </div>
@@ -35,8 +36,8 @@
                         <p>
                             Followers : {{follower_count}}
                             {{/each}}
-                                    <a href="#" class=" button editbutton">View Profile</a>
-                                    <a href="#" class=" button editbutton">Sign Out</a>
+                                    <a href="/profile" class=" button editbutton">View Profile</a>
+                                    <a href="/logout" class=" button editbutton">Sign Out</a>
                         </p>
                     </div>
                     
@@ -56,25 +57,22 @@
                                          {{#each result.[0]}}
 
                         <div class="post">
-                            <div class="postimage"><img alt2="pics" src="../images/Zayn-malik%202.jpg"></div>
+                            <div class="postimage"><img alt2="pics" src="{{pic_url}}"></div>
                             
-                            <button type ="button" onclick="myFunction({{pid}})">Comment this post</button>
+                           <button type ="button" onclick="likeAdd({{pid}})">Comment this post</button>
 
 
-                            <div class="postcaption"> {{caption}} <br>1k likes  <br> 200 comments</div>
+                            <div class="postcaption"> {{caption}} <br> {{like_count}} <br> {{comment_count}} </div>
                         </div>
                                             {{/each}}
-                                    
-<script>
-function myFunction(id) {
-console.log(id);
-}
-</script>
+  
 
                     </div>
 
             </div>
-        <script src="../javascript/homepage.js">
-        </script> 
+            
+                <script src="../javascript/homepage.js">
+</script>           
+        
     </body>
 </html>

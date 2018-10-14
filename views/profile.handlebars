@@ -12,25 +12,28 @@
                 <img alt2="pics" src="../images/Zayn-malik%202.jpg">
             </div>
 
-            <div class="profile">
-                <div class="profileOverlay"></div>
-                <div class="img">
-                    <img alt="pic" src="../images/Zayn-malik.jpg" > 
-                </div>
-                
-                <div class="profileName">
-                    Devbrat Dash
-                </div>
-                
-                <div>
-                    <p>
-                        Followers : 300k
-                        <br><br>
-                        Views : 1M<br>
-                        <a href="#" class=" button editbutton">Edit Profile</a>
-                    </p>
-                </div>
-                
+             <div class="profile">
+               <div class="Overlay"></div>
+                                 {{#each result.[1]}}
+
+                    <div class="img">
+
+                        <img alt="pic" src="{{userdp}}" > 
+                    </div>
+                 
+                    <div class="profileName">
+                      <p>  {{username}}</p>
+                    </div>
+
+                    <div>
+                        <p>
+                            Followers : {{follower_count}}
+                            {{/each}}
+                                    <a href="/profile" class=" button editbutton">View Profile</a>
+                                    <a href="#" class=" button editbutton">Sign Out</a>
+                        </p>
+                    </div>
+                    
             </div>
         
             <div class ="info">
@@ -62,62 +65,6 @@
                     </div>
 
 
-                    <div id="friends">
-                            <div class="friend">
-                                    <div class="friendImage">
-                                        <img alt="pics" src="../images/download.jpg">
-                                    </div>
-                                    <div class="friendName">
-                                        Devbrat Dash
-                                        <a href="#" class=" button ">Add Friend</a>  
-                                    </div>
-                            </div>
-                            <div class="friend">
-                                    <div class="friendImage">
-                                        <img alt="pics" src="../images/download.jpg">
-                                    </div>
-                                    <div class="friendName">
-                                        Devbrat Dash
-                                        <a href="#" class=" button ">Add Friend</a>  
-                                    </div>
-                            </div>
-                            <div class="friend">
-                                    <div class="friendImage">
-                                        <img alt="pics" src="../images/download.jpg">
-                                    </div>
-                                    <div class="friendName">
-                                        Devbrat Dash
-                                        <a href="#" class=" button ">Add Friend</a>  
-                                    </div>
-                            </div>
-                            <div class="friend">
-                                    <div class="friendImage">
-                                        <img alt="pics" src="../images/download.jpg">
-                                    </div>
-                                    <div class="friendName">
-                                        Devbrat Dash
-                                        <a href="#" class=" button ">Add Friend</a>  
-                                    </div>
-                            </div>
-                            <div class="friend">
-                                    <div class="friendImage">
-                                        <img alt="pics" src="../images/download.jpg">
-                                    </div>
-                                    <div class="friendName">
-                                        Devbrat Dash
-                                        <a href="#" class=" button ">Add Friend</a>  
-                                    </div>
-                            </div>
-                            <div class="friend">
-                                    <div class="friendImage">
-                                        <img alt="pics" src="../images/download.jpg">
-                                    </div>
-                                    <div class="friendName">
-                                        Devbrat Dash
-                                        <a href="#" class=" button ">Add Friend</a>  
-                                    </div>
-                            </div>
-                    </div>
             </div>
             
     </body>
