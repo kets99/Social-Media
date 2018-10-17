@@ -2,29 +2,33 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var queries = require(path.join(__dirname,'../model/queries'));
-
 const mime = require('mime');
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination:'./public/uploads',
+    filename: (req,file,callback)=>{
+        callback(null,Date.now()+file.originalname);
+    }
+});
+var upload = multer({ storage: storage })
+
+
 
 router.get('/',(req,res)=>{
    res.render('landing');
 });
-
 
 router.get('/signin',(req,res)=>{
      res.render('signin'); 
 });
 
 router.post('/signin',(req,res)=>{
-
-
-
     queries.checkUser(req,(err,user)=>{
         if(err) 
             res.render('signin',{
             error: err});
         else {
-
-
      console.log(req.user);
     console.log(req.isAuthenticated());
             res.redirect('/homepage');
@@ -32,18 +36,9 @@ router.post('/signin',(req,res)=>{
     });
 });
 
-router.get('/logout', (req, res, next) => {
-    req.logout()
-    req.session.destroy(() => {
-        res.clearCookie('connect.sid')
-        res.redirect('/signin')
-    })
-})﻿
-
 router.get('/signup',(req,res)=>{
    res.render('signup');
 });
-
 
 router.post('/signup',(req,res)=>{
     queries.insertUser(req.body,(err,userid)=>{
@@ -56,77 +51,45 @@ router.post('/signup',(req,res)=>{
 });
 
 
+router.get('/logout', (req, res, next) => {
+    req.logout()
+    req.session.destroy(() => {
+        res.clearCookie('connect.sid')
+        res.redirect('/signin')
+    })
+})﻿
+
 router.get('/homepage',authenticationMiddleware(),(req,res)=>{
     
     queries.getHome(req.session.passport.user,(err,result)=>{
         if(err)
             throw err;
         else
-        {
-            
-            console.log(result);
+        {  
             res.render('homepage',{
                     result
             });
-    }
+        }       
+    });
 });
-});
 
-
-
-router.get('/explore',(req,res)=>{
-queries.getPeople(userid1,(err,result)=>{
+router.get('/explore',authenticationMiddleware(),(req,res)=>{
+queries.getPeople(req.session.passport.user,(err,result)=>{
         if(err) 
             console.log(err);
         else {
             res.render('explore',{result});
-
         }
     });
-    
-});
+ });
 
 
 
 
-router.get('/profile',authenticationMiddleware(),(req,res)=>{
-    
-    queries.getProfile(req.session.passport.user,(err,result)=>{
-        if(err)
-            throw err;
-        else
-        {
-            console.log(result);
-            res.render('profile',{
-                    result
-            });
-    }
-});
-});
+
+router.post('/post',upload.single('photo1'),(req,res)=>{
 
 
-
-router.post('/follow',(req,res)=>{
-    var follower = id;
-    var following = req.body.userid;
-    queries.followPeople(following,(err,userid),follower=>{
-        if(err) 
-            console.log(err);
-        else 
-            res.redirect('/homepage/'+userid);
-    });
-});
-
-
-router.get('/photoposting',(req,res)=>{
-   res.render('post');
-});
-
-
-
-
-router.post('/photoposting',(req,res)=>{
-    var url ;
 const keyFilename="./fir-bb90d-firebase-adminsdk-qbtbz-67a3a49f44.json"; //replace this with api key file
 const projectId = "fir-bb90d" //replace with your project id
 const bucketName = `fir-bb90d.appspot.com`;
@@ -140,69 +103,120 @@ const storage = new Storage({
 
 const bucket = storage.bucket(bucketName);
 
-var id=55;
-var img=id;
-
-var vmvm = req.body.path1;
-console.log(vmvm)
-//put a ../ before the filename to get desktop
-
-const filePath = 'bleh.jpg';
-const uploadTo = id+'.jpg';
+var id = req.file.filename;
+const filePath = "public/uploads/"+req.file.filename;
+const uploadTo = id;
 const fileMime = mime.lookup(filePath);
 
+var url;
 
 bucket.upload(filePath,{
     destination:uploadTo,
     public:true,
     metadata: {contentType: fileMime,cacheControl: "public, max-age=300"}
 }, function(err, file) {
+
     if(err)
     {
         console.log(err);
         return;
     }
-    console.log(createPublicFileURL(uploadTo));
+    
+
+    console.log("thats "+url);
 });
 
 
 function createPublicFileURL(storageName) {
-     url =`http://storage.googleapis.com/${bucketName}/${encodeURIComponent(storageName)}`;
-return url ;
+     return `http://storage.googleapis.com/${bucketName}/${encodeURIComponent(storageName)}`;
+
 }
 
-queries.addPosts(following,(err,userid),follower=>{
+//here, we are uploading theinfo to posts .. so it can be retrieved when necessary
+ queries.addPosts(createPublicFileURL(uploadTo),req,(err,result)=>{
+        if(err)
+            throw err;
+        else
+        {
+            console.log("fine whatever");
+        }
+     });
+
+
+
+
+
+});
+
+
+
+router.get('/profile',authenticationMiddleware(),(req,res)=>{
+      queries.getProfile(req.session.passport.user,(err,result)=>{
+        if(err)
+            throw err;
+        else
+        {
+            console.log(result);
+            res.render('profile',{
+                    result
+                    });
+        }
+     });
+});
+
+router.get('/op_profile',authenticationMiddleware(),(req,res)=>{
+
+
+    const user1 = 4 ; 
+    queries.getoprof(user1,(err,result)=>{
+        if(err)
+            throw err;
+        else
+        {
+            console.log(result);
+            res.render('op_profile',{
+                    result
+            });
+    }
+});
+});
+
+
+router.post('/follow',(req,res)=>{
+    var follower = req.session.passport.user;
+    var following = req.body.pid;
+    console.log("dfgh"+following);
+    queries.followPeople(following,(err,userid),follower=>{
         if(err) 
             console.log(err);
         else 
             res.redirect('/homepage/'+userid);
     });
-
-
-
-
 });
 
 
-router.get('/profile',(req,res)=>{
-   res.render('profile');
+router.get('/post',authenticationMiddleware(),(req,res)=>{
+    var result = req.session.passport.user;
+   res.render('post',{result});
 });
 
 
 
+// router.post('/post',(req,res)=>{
 
-router.get('/post/add',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../public/html/post/post.html'));
-    if(req.file) console.log(req.files);
-});
+// console.log("nameeeeeeee"+req.body.photo1);
+// filename(req,req.body.photo1,err)
+// console.log("wasup"+req.body.caption);
+//     queries.addPosts(req,(err,result)=>{
+//         if(err)
+//             throw err;
+//         else
+//         {
+//             console.log(result);           
+//     }
+// });
 
-router.post('/post/add',(req,res)=>{
-    console.log(req.file);
-    console.log(typeof(req.file));
-    console.log(ketki1);
-    
-}
-);
+
 
 
 
@@ -215,6 +229,8 @@ function authenticationMiddleware () {
     }
 }
 
-
+router.post('/like',(req,res)=>{
+    console.log(res.data.tittle);
+});
 
 module.exports=router;

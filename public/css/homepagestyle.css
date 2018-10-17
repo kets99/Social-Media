@@ -18,6 +18,18 @@ img{
     object-fit: cover;
 }
 
+
+
+.section{
+    display: flex;
+    width: 100%;
+    height:9%;
+    justify-content: space-around; 
+}
+
+
+
+
 .button{
     display: block;
     box-shadow: 3px 3px 5px black ;
@@ -155,16 +167,6 @@ img{
     width: 64%;
 }
 
-.section{
-    display: flex;
-    width: 64%;
-    height:9%;
-    justify-content: space-around; 
-    position: fixed;
-    top: 0;
-    left: 18%;
-}
-
 .link{
     height:100%;
     padding: 2%;
@@ -240,7 +242,4 @@ img{
     margin: 10%;
     padding: 5%;
 }
-
-
-
 

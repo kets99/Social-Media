@@ -3,7 +3,6 @@ var path = require('path');
 var app = express();
 var exphbs = require('express-handlebars');
 var handler = require('./routes/handler');
-//const multer = require('multer');
 const mime = require('mime');
 var session=require('express-session');
 var passport = require('passport');
@@ -44,7 +43,10 @@ app.use('/',handler);
 app.set('view engine', 'handlebars');
 app.engine('handlebars',exphbs());
 
-app.listen(3000,()=>{
+var port =process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
+
+app.listen(port,()=>{
     console.log('listening');
 });
 

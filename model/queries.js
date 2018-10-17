@@ -3,11 +3,11 @@ var bcrypt = require('bcryptjs');
 var passport1 = require('./../app');
 var LocalStrategy   = require('passport-local').Strategy;
 var passport = require('passport');
+var multer= require('multer');
 
 
 const connection = mysql2.createConnection({
-    host:'127.0.0.1',
-
+  host:'127.0.0.1',
   user: "root",
   password: "newpassword",
   database :"social",
@@ -20,7 +20,7 @@ connection.connect((err)=>{
 });
 
 
-//nserting user -----------------------------
+//Inserting user -----------------------------
 var insertUser=(body,callback)=>{
     //Encryption -------------------------------
         bcrypt.genSalt(10,(err,salt)=>{
@@ -91,7 +91,7 @@ var insertUser=(body,callback)=>{
 // Getting user info and feed ---------------------------------
     var getHome=(id,callback)=>{
     
-        connection.query("SELECT * FROM post,foll_info WHERE follower_id="+id+" AND person1_id=uid1 order by time desc limit 10 ;SELECT * from userinfo WHERE userid="+id ,[0,1],(err,result,fields)=>{
+        connection.query("SELECT * FROM userinfo,post,foll_info WHERE follower_id="+id+" AND person1_id=uid1  order by time desc limit 10 ;SELECT * from userinfo WHERE userid="+id ,[0,1],(err,result,fields)=>{
                 if(result) 
                     callback(null,result);
                 else
@@ -115,7 +115,21 @@ var insertUser=(body,callback)=>{
         );
     }
 
- var getPeople=(id,callback)=>{
+
+var getoprof=(id,callback)=>{
+        
+        connection.query("SELECT * FROM post WHERE uid1="+id+" order by time desc limit 10 ;SELECT username,userdp,userdob,follower_count from userinfo WHERE userid="+id ,[0,1],(err,result,fields)=>{
+                if(result) 
+                    callback(null,result);
+                else
+                    callback(err,null);
+            }             
+        );
+    }
+
+
+//for the /explore page !!!!!
+  var getPeople=(id,callback)=>{
         console.log("this"+id);
         //abhi , its not getting distinct values ..
         connection.query("SELECT * FROM userinfo,foll_info WHERE  follower_id NOT In ("+id+") AND userid=person1_id limit 20 ;SELECT * from userinfo WHERE userid= "+id ,[0,1],(err,result,fields)=>{
@@ -129,7 +143,7 @@ var insertUser=(body,callback)=>{
 
 
  var followPeople=(user1)=>{
-    
+
         console.log("hereee");
         var follower = userid1;
         connection.query("insert into foll_info(follower_id,person1_id) values ("+follower+","+user1+")",(err,result,fields)=>{
@@ -157,6 +171,7 @@ var insertUser=(body,callback)=>{
     }
 
 
+
  var commentAdd=(user2)=>{
     
         console.log("hereee");
@@ -172,9 +187,15 @@ var insertUser=(body,callback)=>{
 
 
 
- var addPosts=(id,callback)=>{
+ var addPosts=(url,req,callback)=>{
+
+    console.log("this da url"+url);
+    console.log(req.session.passport.user+"what is life");
+    var date = "2018-02-02 11:11:11";
+        console.log(date+"kk");
+
         //the method for adding post details ... into the dtabase
-        connection.query("insert into ",(err,result,fields)=>{
+        connection.query("insert into post (uid1,caption,pic_url,time) values ("+req.session.passport.user+","+req.body.cap+","+url+","+date+")",(err,result,fields)=>{
                 if(result) 
                     callback(null,result);
                 else
@@ -193,5 +214,7 @@ module.exports={
     getProfile,
     likeAdd,
     commentAdd,
+    getoprof,
+ 
 }
 

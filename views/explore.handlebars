@@ -1,14 +1,12 @@
 <html>
     <head>
-        <title>
-        Explore
-        </title>
+        <title>Explore</title>
         <link rel="stylesheet" type="text/css" href="/../css/homepagestyle.css"> 
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     </head>
     
     <body>
-            <div class="logo">SocialMedia</div>
+        <div class="logo">SocialMedia</div>
             <div class="utilities">
                 <div class="utility"> 
                     <img alt="icon" src="../icons/add-a-contact-on-phone-interface-symbol-of-a-user-with-a-plus-sign.png">
@@ -20,13 +18,15 @@
                     <img alt="icon" src="../icons/turn-notifications-on-button.png">
                 </div>
             </div>
+
             <div class="profile">
                 <div class="Overlay"></div>
+                                 {{#each result.[1]}}
+
                     <div class="img">
 
-                        <img alt="pic" src="../images/cover.jpg" > 
+                        <img alt="pic" src="{{userdp}}" > 
                     </div>
-                 {{#each result.[1]}}
                     <div class="profileName">
                       <p>  {{username}}</p>
                     </div>
@@ -35,8 +35,8 @@
                         <p>
                             Followers : {{follower_count}}
                             {{/each}}
-                                    <a href="#" class=" button editbutton">View Profile</a>
-                                    <a href="#" class=" button editbutton">Sign Out</a>
+                                    <a href="/profile" class=" button editbutton">View Profile</a>
+                                    <a href="/logout" class=" button editbutton">Sign Out</a>
                         </p>
                     </div>
                     
@@ -44,6 +44,13 @@
         
             
             <div class ="info">
+                    <div class="section" id="tab">
+                        <a href="/homepage" >Feed</a>
+            <a href="/explore">explore</a>
+        </div>
+
+
+            <div class ="posts">
                                 {{#each result.[0]}}
 
                         <div class="person">
@@ -64,7 +71,22 @@
 
             </div>
         
-        <script type="text/javascript" src="../model/queries.js">
+        <script type="text/javascript">
+
+function followPeople(pid){
+                    
+console.log(pid);
+fetch('/follow',{
+    method :'post',
+    headers :{
+        'Content-Type' :'application/json'
+    }
+    body:JSON.stringify({pid})
+})   ;
+    
+                }
+
+
 </script>
     </body>
 </html>

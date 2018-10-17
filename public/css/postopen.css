@@ -1,0 +1,61 @@
+.post-box{
+	background-color:black;
+	margin-right:40%;
+	position:absolute;
+}
+
+.comment-box{
+	background-color:azure;
+	margin-left:55%;
+	position:absolute;
+}
+
+.img-circle {
+	width:10%;
+	height:10%;
+    border-radius: 50%;
+	margin-left:3%;
+	margin-top:3%;
+	position:absolute;
+}
+
+.username{
+	height:50px;
+	margin-left:18%;
+	margin-top:3%;
+	position:absolute;
+}
+
+.post-time{
+	height:50px;
+	margin-left:18%;
+	margin-top:7.5%;
+	position:absolute;
+}
+
+.border{
+    display: block;
+    margin-top: 40.5%;
+	 margin-left: 5%;
+    width: 90%;
+    height: 3px;
+    background: #3498db;
+    position:absolute
+}
+
+.border1{
+    display: block;
+    margin-top: 31%;
+	 margin-left: 5%;
+    width: 90%;
+    height: 3px;
+    background: #3498db;
+    position:absolute
+}
+
+.numberof{
+	display:flex;
+	margin-top:26.5%;
+	margin-left:57%;
+	position:absolute;
+}

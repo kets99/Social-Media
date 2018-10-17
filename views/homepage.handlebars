@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>
-        Test
+        Homepage
         </title>
         <link rel="stylesheet" type="text/css" href="/../css/homepagestyle.css"> 
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -36,6 +36,7 @@
                         <p>
                             Followers : {{follower_count}}
                             {{/each}}
+                                    <a href="/post" class=" button editbutton">Create New Post</a>
                                     <a href="/profile" class=" button editbutton">View Profile</a>
                                     <a href="/logout" class=" button editbutton">Sign Out</a>
                         </p>
@@ -45,24 +46,25 @@
         
             
             <div class ="info">
-                    <div class="section" id="tab">
-                        <a href="#section"  class=" button link ">NewsFeeds</a>
-            <a href="/explore/:"{userid}>explore</a>
+                    <div class="section">
+                        <a href="/homepage" >Feed</a>
+                        <a href="/explore">explore</a>
+        </div>
 
-
-                        
-                    </div>
 
                     <div class="posts">
                                          {{#each result.[0]}}
 
                         <div class="post">
+<div class="poster"> {{username}} </div>
                             <div class="postimage"><img alt2="pics" src="{{pic_url}}"></div>
-                            
-                           <button type ="button" onclick="likeAdd({{pid}})">Comment this post</button>
 
+      <div class="button">                             
+<input onclick="change()" type="button" value="Like" id="myButton1"></input>
+</div>
+                        
 
-                            <div class="postcaption"> {{caption}} <br> {{like_count}} <br> {{comment_count}} </div>
+                            <div class="postcaption"> {{caption}} <br> {{like_count}} likes <br> {{comment_count}} comments</div>
                         </div>
                                             {{/each}}
   
@@ -71,7 +73,32 @@
 
             </div>
             
-                <script src="../javascript/homepage.js">
+                <script type="text/javascript">
+
+function change() // no ';' here
+{
+    console.log("loggg");
+    var elem = document.getElementById("myButton1");
+    if (elem.value=="Liked") {elem.value = "Like"; like_count--;}
+    else {elem.value = "Liked"; like_count++;}
+}
+
+
+                    function  likeAdd(pid){
+                      //  const pid=pid;
+
+fetch('/like1').then((response) => {
+        console.log("vhv");
+
+    console.log(response);
+    response.json().then((data) => {
+        console.log(data);
+    });
+});
+                      
+    
+                }
+
 </script>           
         
     </body>
